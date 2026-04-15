@@ -118,54 +118,70 @@ export default async function decorate(block) {
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
-  // decorate nav DOM
-  block.textContent = '';
-  const nav = document.createElement('nav');
-  nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  // helper: build a nav element from a (cloned) fragment and wire its interactions
+  function createNavFromFragment(srcFragment, id = 'nav') {
+    const nav = document.createElement('nav');
+    nav.id = id;
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
-  });
+    // clone the fragment so we can use the same content for multiple navs
+    const fragClone = srcFragment.cloneNode(true);
+    while (fragClone.firstElementChild) nav.append(fragClone.firstElementChild);
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
-  }
-
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        }
-      });
+    const classes = ['brand', 'sections', 'tools'];
+    classes.forEach((c, i) => {
+      const section = nav.children[i];
+      if (section) section.classList.add(`nav-${c}`);
     });
-  }
 
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
+    const navBrand = nav.querySelector('.nav-brand');
+    if (navBrand) {
+      const brandLink = navBrand.querySelector('.button');
+      if (brandLink) {
+        brandLink.className = '';
+        const bc = brandLink.closest('.button-container');
+        if (bc) bc.className = '';
+      }
+    }
+
+    const navSections = nav.querySelector('.nav-sections');
+    if (navSections) {
+      navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+        navSection.addEventListener('click', () => {
+          if (isDesktop.matches) {
+            const expanded = navSection.getAttribute('aria-expanded') === 'true';
+            toggleAllNavSections(navSections);
+            navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          }
+        });
+      });
+    }
+
+    // hamburger for mobile (scoped to this nav)
+    const hamburger = document.createElement('div');
+    hamburger.classList.add('nav-hamburger');
+    hamburger.innerHTML = `<button type="button" aria-controls="${id}" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+    hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
+    nav.prepend(hamburger);
+    nav.setAttribute('aria-expanded', 'false');
+
+    // initialize behavior according to viewport
+    toggleMenu(nav, navSections, isDesktop.matches);
+    // keep responsive behavior in sync
+    isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+
+    return nav;
+  }
+
+  // decorate nav DOM: create two similar navs (primary and secondary)
+  block.textContent = '';
+  const primaryNav = createNavFromFragment(fragment, 'nav');
+  const secondaryNav = createNavFromFragment(fragment, 'nav-secondary');
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
-  navWrapper.append(nav);
+  navWrapper.append(primaryNav, secondaryNav);
   block.append(navWrapper);
 }
