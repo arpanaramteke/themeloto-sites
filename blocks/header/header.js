@@ -117,13 +117,12 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
-
   // helper: build a nav element from a (cloned) fragment and wire its interactions
   function createNavFromFragment(srcFragment, id = 'nav') {
     const nav = document.createElement('nav');
     nav.id = id;
 
-    // clone the fragment so we can use the same content for multiple navs
+    // clone the fragment so we can reuse the same content
     const fragClone = srcFragment.cloneNode(true);
     while (fragClone.firstElementChild) nav.append(fragClone.firstElementChild);
 
@@ -175,10 +174,38 @@ export default async function decorate(block) {
     return nav;
   }
 
-  // decorate nav DOM: create two similar navs (primary and secondary)
+  // decorate nav DOM: create primary nav and a secondary nav which can be customized
   block.textContent = '';
   const primaryNav = createNavFromFragment(fragment, 'nav');
-  const secondaryNav = createNavFromFragment(fragment, 'nav-secondary');
+
+  // determine fragment for secondary nav
+  let secondaryFragment = fragment;
+  // 1) check header block dataset for an explicit fragment path (data-nav-secondary)
+  if (block.dataset && block.dataset.navSecondary) {
+    try {
+      const path = new URL(block.dataset.navSecondary, window.location).pathname;
+      secondaryFragment = await loadFragment(path);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn('Failed to load secondary nav from data-nav-secondary:', e);
+      secondaryFragment = fragment;
+    }
+  } else {
+    // 2) check metadata key 'nav-secondary'
+    const navSecondaryMeta = getMetadata('nav-secondary');
+    if (navSecondaryMeta) {
+      try {
+        const path = new URL(navSecondaryMeta, window.location).pathname;
+        secondaryFragment = await loadFragment(path);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to load secondary nav from metadata nav-secondary:', e);
+        secondaryFragment = fragment;
+      }
+    }
+  }
+
+  const secondaryNav = createNavFromFragment(secondaryFragment, 'nav-secondary');
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
