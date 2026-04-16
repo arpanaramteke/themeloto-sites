@@ -1,0 +1,85 @@
+.top-header {
+  background-color: var(--accent-color, #d71920);
+  color: var(--accent-contrast, #fff);
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 44px;
+  z-index: 50;
+}
+
+.top-header .top-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 24px; /* gutter */
+  box-sizing: border-box;
+}
+
+.top-header .left,
+.top-header .right {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.top-header .left .item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+
+.top-header .left .item svg {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.top-header .right .hours {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.top-header .socials {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.top-header .socials a.icon {
+  width: 28px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: inherit;
+}
+
+.top-header .socials a.icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ensure main page content is not hidden beneath the fixed top bar */
+main, .main, body > .page-content {
+  padding-top: 44px;
+}

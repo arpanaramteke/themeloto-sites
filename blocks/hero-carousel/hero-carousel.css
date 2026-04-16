@@ -1,0 +1,81 @@
+.section.hero-carousel-container {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Slide layout */
+.hero-carousel .hero-slide {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-carousel .hero-media picture,
+.hero-carousel .hero-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Text Overlay */
+.hero-carousel .hero-text-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 3.5rem 4rem;
+  color: #fff;
+}
+
+.hero-carousel h2 {
+  font-size: 56px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.hero-carousel p {
+  font-size: 18px;
+  margin-bottom: 22px;
+}
+
+/* Overlay */
+.hero-carousel .hero-slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* CTA buttons */
+.hero-carousel a {
+  padding: 14px 34px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Swiper controls */
+.hero-carousel .swiper-button-prev,
+.hero-carousel .swiper-button-next {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Pagination */
+.hero-carousel .swiper-pagination-bullet {
+  background: #fff;;
+}
+.hero-carousel .swiper-pagination-bullet-active {
+  background: #fff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-carousel h2 {
+    font-size: 40px;
+  }
+}

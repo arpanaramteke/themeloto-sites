@@ -1,214 +1,44 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
-
-// media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
-
-function closeOnEscape(e) {
-  if (e.code === 'Escape') {
-    const nav = document.getElementById('nav');
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections);
-      navSectionExpanded.focus();
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections);
-      nav.querySelector('button').focus();
-    }
-  }
-}
-
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
-    }
-  }
-}
-
-function openOnKeydown(e) {
-  const focused = document.activeElement;
-  const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
-    const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
-    // eslint-disable-next-line no-use-before-define
-    toggleAllNavSections(focused.closest('.nav-sections'));
-    focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-  }
-}
-
-function focusNavSection() {
-  document.activeElement.addEventListener('keydown', openOnKeydown);
-}
-
-/**
- * Toggles all nav sections
- * @param {Element} sections The container element
- * @param {Boolean} expanded Whether the element should be expanded or collapsed
- */
-function toggleAllNavSections(sections, expanded = false) {
-  if (!sections) return;
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
-    section.setAttribute('aria-expanded', expanded);
-  });
-}
-
-/**
- * Toggles the entire nav
- * @param {Element} nav The container element
- * @param {Element} navSections The nav sections within the container element
- * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
-function toggleMenu(nav, navSections, forceExpanded = null) {
-  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
-  nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-  // enable nav dropdown keyboard accessibility
-  if (navSections) {
-    const navDrops = navSections.querySelectorAll('.nav-drop');
-    if (isDesktop.matches) {
-      navDrops.forEach((drop) => {
-        if (!drop.hasAttribute('tabindex')) {
-          drop.setAttribute('tabindex', 0);
-          drop.addEventListener('focus', focusNavSection);
-        }
-      });
-    } else {
-      navDrops.forEach((drop) => {
-        drop.removeAttribute('tabindex');
-        drop.removeEventListener('focus', focusNavSection);
-      });
-    }
-  }
-
-  // enable menu collapse on escape keypress
-  if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
-    window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
-  } else {
-    window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
-  }
-}
-
-/**
- * loads and decorates the header, mainly the nav
- * @param {Element} block The header block element
- */
-export default async function decorate(block) {
-  // load nav as fragment
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
-  // helper: build a nav element from a (cloned) fragment and wire its interactions
-  function createNavFromFragment(srcFragment, id = 'nav') {
-    const nav = document.createElement('nav');
-    nav.id = id;
-
-    // clone the fragment so we can reuse the same content
-    const fragClone = srcFragment.cloneNode(true);
-    while (fragClone.firstElementChild) nav.append(fragClone.firstElementChild);
-
-    const classes = ['brand', 'sections', 'tools'];
-    classes.forEach((c, i) => {
-      const section = nav.children[i];
-      if (section) section.classList.add(`nav-${c}`);
-    });
-
-    const navBrand = nav.querySelector('.nav-brand');
-    if (navBrand) {
-      const brandLink = navBrand.querySelector('.button');
-      if (brandLink) {
-        brandLink.className = '';
-        const bc = brandLink.closest('.button-container');
-        if (bc) bc.className = '';
-      }
-    }
-
-    const navSections = nav.querySelector('.nav-sections');
-    if (navSections) {
-      navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        navSection.addEventListener('click', () => {
-          if (isDesktop.matches) {
-            const expanded = navSection.getAttribute('aria-expanded') === 'true';
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-          }
-        });
-      });
-    }
-
-    // hamburger for mobile (scoped to this nav)
-    const hamburger = document.createElement('div');
-    hamburger.classList.add('nav-hamburger');
-    hamburger.innerHTML = `<button type="button" aria-controls="${id}" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-    hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-    nav.prepend(hamburger);
-    nav.setAttribute('aria-expanded', 'false');
-
-    // initialize behavior according to viewport
-    toggleMenu(nav, navSections, isDesktop.matches);
-    // keep responsive behavior in sync
-    isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
-
-    return nav;
-  }
-
-  // decorate nav DOM: create primary nav and a secondary nav which can be customized
+export default function decorate(block) {
+  const items = block.textContent.split('|').map(i => i.trim());
+ 
+  const logo = items[0];
+  const menuItems = items.slice(1, -1);
+  const button = items[items.length - 1];
+ 
+  // clear existing content
   block.textContent = '';
-  const primaryNav = createNavFromFragment(fragment, 'nav');
-
-  // determine fragment for secondary nav
-  let secondaryFragment = fragment;
-  // 1) check header block dataset for an explicit fragment path (data-nav-secondary)
-  if (block.dataset && block.dataset.navSecondary) {
-    try {
-      const path = new URL(block.dataset.navSecondary, window.location).pathname;
-      secondaryFragment = await loadFragment(path);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.warn('Failed to load secondary nav from data-nav-secondary:', e);
-      secondaryFragment = fragment;
-    }
-  } else {
-    // 2) check metadata key 'nav-secondary'
-    const navSecondaryMeta = getMetadata('nav-secondary');
-    if (navSecondaryMeta) {
-      try {
-        const path = new URL(navSecondaryMeta, window.location).pathname;
-        secondaryFragment = await loadFragment(path);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('Failed to load secondary nav from metadata nav-secondary:', e);
-        secondaryFragment = fragment;
-      }
-    }
-  }
-
-  const secondaryNav = createNavFromFragment(secondaryFragment, 'nav-secondary');
-
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
-  navWrapper.append(primaryNav, secondaryNav);
-  block.append(navWrapper);
+ 
+  // create nav container
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+ 
+  // logo
+  const logoDiv = document.createElement('div');
+  logoDiv.className = 'logo';
+  logoDiv.textContent = logo;
+ 
+  // menu container
+  const menuDiv = document.createElement('div');
+  menuDiv.className = 'menu';
+ 
+  // menu items
+  menuItems.forEach(item => {
+    const span = document.createElement('span');
+    span.textContent = item;
+    menuDiv.appendChild(span);
+  });
+ 
+  // button
+  const btn = document.createElement('span');
+  btn.className = 'btn';
+  btn.textContent = button;
+ 
+  menuDiv.appendChild(btn);
+ 
+  // append everything
+  nav.appendChild(logoDiv);
+  nav.appendChild(menuDiv);
+ 
+  block.appendChild(nav);
 }
+ 

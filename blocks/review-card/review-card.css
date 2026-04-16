@@ -1,0 +1,43 @@
+/* GRID */
+.review-card.block > div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* CARD */
+.review-card.block > div > div {
+  position: relative;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px #eee, 0 6px 20px rgba(0,0,0,0.05);
+  text-align: center;
+  cursor: pointer;
+}
+
+/* NUMBER (DEFAULT GREY) */
+.review-number {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #dcdcdc;
+  transition: color 0.3s ease;
+}
+
+/* ✅ HOVER: RED NUMBER */
+.review-card.block > div > div:hover .review-number {
+  color: #ff1e1e;
+}
+
+/* ✅ HOVER: RED BOTTOM BORDER */
+.review-card.block > div > div:hover {
+  border-bottom: 3px solid #ff1e1e;
+}
+
+/* ✅ HOVER: TITLE RED */
+.review-card.block > div > div:hover p:nth-of-type(2) {
+  color: #ff1e1e;
+}
