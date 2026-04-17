@@ -73,4 +73,3 @@ function createDiv(className) {
   div.className = className;
   return div;
 }
-``
