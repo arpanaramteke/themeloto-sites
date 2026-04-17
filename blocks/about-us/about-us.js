@@ -42,6 +42,10 @@ export default function decorate(block) {
 
   if (title) {
     title.classList.add('about-title');
+    // highlight the word 'marketing' if present
+    const txt = title.innerHTML;
+    const replaced = txt.replace(/(marketing)/i, '<span class="highlight">$1</span>');
+    title.innerHTML = replaced;
     contentCol.append(title);
   }
 

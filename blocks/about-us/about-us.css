@@ -1,8 +1,10 @@
 .about-us-inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 560px 1fr; /* fixed image column to match design */
   gap: 48px;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .about-us-image {
@@ -13,9 +15,12 @@
   position: absolute;
   bottom: 20px;
   left: 20px;
-  background: red;
+  background: #d92b27;
   color: #fff;
-  padding: 8px 16px;
+  padding: 12px 20px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
 .about-us-content {
@@ -39,6 +44,8 @@
   font-weight: 800;
 }
 
+.about-title .highlight { color: #d92b27; }
+
 .about-description {
   color: #666;
   max-width: 520px;
@@ -51,42 +58,122 @@
   margin-top: 12px;
 }
 
-/* Each skill is a single row: label | track | percent */
+/* ================================
+   SKILLS — MATCH REAL SITE
+================================ */
+
+.about-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 16px;
+}
+
 .about-skills .skill {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Label row */
+.about-skills .skill span:first-child {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Percent */
+/* ================================
+   SKILLS — FINAL MATCHED UI
+================================ */
+
+.about-skills {
+  display: flex;
+  flex-direction: column;
   gap: 18px;
-  position: relative; /* for pseudo-element stacking */
+  margin-top: 12px;
 }
 
-.about-skills .skill > span:first-child {
-  color: #6b6b6b;
-  font-weight: 700;
+/* Individual skill */
+.about-skills .skill {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Label */
+.about-skills .skill span:first-child {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 4px;
+}
+/* ================================
+   SKILLS — FINAL ALIGNED VERSION
+================================ */
+
+.about-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 14px;
+}
+
+/* Skill container */
+.about-skills .skill {
+  position: relative;
+  padding-top: 20px; /* space for label + percent row */
+}
+
+/* Label (left) */
+.about-skills .skill span:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Percent (right) */
 .about-skills .skill .percent {
-  color: #e6a623; /* gold percent color */
-  font-weight: 800;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+  color: #f4a11a;
 }
 
-/* track (background) in middle column */
-.about-skills .skill .track {
-  display: block; /* fallback if markup changes */
+/* Track (background) */
+.about-skills .skill::after {
+  content: '';
+  display: block;
+  margin-top: 6px;
+
+  width: 100%;
+  height: 8px;
+  border-radius: 50px;
+
+  border: 1px solid #d92b27;
+  background: transparent;
 }
 
+/* Fill */
 .about-skills .skill::before {
   content: '';
-  grid-column: 2;
-  height: 12px;
-  border-radius: 12px;
-  background: #fff;
-  border: 2px solid #f2e8e8;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-  width: 100%;
-  position: relative;
-  z-index: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: var(--pct, 0%);
+  height: 8px;
+  border-radius: 50px;
+  background: #d92b27;
 }
+
 
 /* filled portion drawn by a gradient that uses the CSS var set by JS (--pct) */
 .about-skills .skill::after {
@@ -95,7 +182,7 @@
   height: 12px;
   border-radius: 12px;
   width: 100%;
-  background: linear-gradient(to right, #d92b27 var(--pct, 0%), rgba(217,43,39,0) var(--pct, 0%));
+  background: linear-gradient(to right, #d92b27 var(--pct, 0%), rgba(217,43,39,0) calc(var(--pct, 0%)));
   margin-left: 0;
   position: relative;
   z-index: 1;
@@ -108,8 +195,8 @@
   margin-top: 10px;
 }
 .about-signature .name {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 22px;
+  font-family: 'Pacifico', 'Georgia', cursive;
+  font-size: 36px;
   color: #0b2b2b;
 }
 .about-signature .role {
@@ -124,12 +211,30 @@
   border-radius: 6px;
   display: inline-block;
   margin-top: 12px;
+  border: none;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+  width: auto;
+  max-width: none;
+  text-align: center;
 }
+
+/* IMAGE sizing */
+.about-us-image img {
+  width: 560px;
+  height: 580px;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+
+/* small visual tweak: space between signature and CTA like screenshot */
+.about-signature { margin-bottom: 18px; }
 
 /* small tweaks for mobile */
 @media (max-width: 900px) {
-  .about-us-inner { grid-template-columns: 1fr; }
+  .about-us-inner { grid-template-columns: 1fr; padding: 0 18px; }
   .about-us-image img { width: 100%; height: auto; }
   .about-title { font-size: 30px; }
+  .about-badge { bottom: 12px; left: 12px; padding: 8px 12px; }
 }
 

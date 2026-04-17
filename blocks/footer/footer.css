@@ -1,20 +1,133 @@
-footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+/* ================= FOOTER WRAPPER ================= */
+footer.footer-wrapper {
+  position: relative;
+  background: url('https://themeloto.com/wps/gradi/wp-content/uploads/2024/11/gradi-slider.jpg')
+    center center / cover no-repeat;
+  color: #ffffff;
+  font-family: 'Inter', 'Poppins', Arial, sans-serif;
 }
 
-footer .footer > div {
-  margin: auto;
+/* Dark overlay */
+footer.footer-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  z-index: 0;
+}
+
+/* ================= FOOTER CONTENT ================= */
+footer.footer-wrapper .footer.block {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  margin: 0 auto;
+  padding: 95px 32px 35px;
 }
 
-footer .footer p {
-  margin: 0;
+/* ================= MAIN GRID ================= */
+footer.footer-wrapper .about.block > div {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr 1fr 1.2fr;
+  gap: 55px;
+  align-items: flex-start;
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+/* ================= LOGO + TEXT ================= */
+footer.footer-wrapper .about.block > div > div:first-child {
+  max-width: 340px;
+}
+
+footer.footer-wrapper .about.block img {
+  display: block;
+  margin-bottom: 20px;
+}
+
+footer.footer-wrapper .about.block > div > div:first-child p:nth-child(2) {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #dddddd;
+}
+
+/* ================= COLUMN HEADING ================= */
+footer.footer-wrapper .about.block > div > div p:first-child {
+  position: relative;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+
+
+/* ✅ SHORT RED UNDERLINE (MATCH ORIGINAL) */
+footer.footer-wrapper .about.block > div > div p:first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 36px;           /* Exact short length */
+  height: 2px;
+  background-color: #e63946;
+}
+
+
+/* ================= LINKS ================= */
+footer.footer-wrapper .about.block > div > div p:not(:first-child) {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #cfcfcf;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+footer.footer-wrapper .about.block > div > div p:not(:first-child):hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+
+/* ================= BOTTOM BAR ================= */
+footer.footer-wrapper .default-content-wrapper {
+  margin-top: 65px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: #cccccc;
+}
+
+footer.footer-wrapper
+  .about.block > div > div:first-child p:first-child::after {
+  display: none;
+}
+
+
+footer.footer-wrapper .default-content-wrapper a {
+  color: #cccccc;
+  text-decoration: none;
+}
+
+footer.footer-wrapper .default-content-wrapper a:hover {
+  color: #ffffff;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 960px) {
+  footer.footer-wrapper .about.block > div {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  footer.footer-wrapper .about.block > div {
+    grid-template-columns: 1fr;
+  }
+
+  footer.footer-wrapper .default-content-wrapper {
+    flex-direction: column;
+    text-align: center;
   }
 }

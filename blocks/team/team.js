@@ -1,33 +1,16 @@
 export default function decorate(block) {
-  [...block.children].forEach((row) => {
-    const [image, name, role, social] = row.children;
+  [...block.children].forEach((card) => {
+    const socialCell = card.children[3];
+    const text = socialCell.textContent.trim();
 
-    /* Image */
-    const img = document.createElement('img');
-    img.src = image.textContent.trim();
-    img.alt = name.textContent.trim();
-
-    /* Name */
-    const title = document.createElement('h3');
-    title.textContent = name.textContent;
-
-    /* Role */
-    const roleEl = document.createElement('p');
-    roleEl.className = 'role';
-    roleEl.textContent = role.textContent;
-
-    /* Social icons */
-    const socialWrap = document.createElement('div');
-    socialWrap.className = 'social';
-
-    social.textContent.split(',').forEach((icon) => {
+    const wrapper = document.createElement('div');
+    text.split(',').forEach((item) => {
       const span = document.createElement('span');
-      span.textContent = icon.trim().toUpperCase();
-      socialWrap.append(span);
+      span.textContent = item.trim();
+      wrapper.append(span);
     });
 
-    row.innerHTML = '';
-    row.append(img, title, roleEl, socialWrap);
+    socialCell.innerHTML = '';
+    socialCell.append(wrapper);
   });
 }
-``
