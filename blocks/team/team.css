@@ -1,0 +1,62 @@
+.block.team {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin: 60px auto;
+  max-width: 1200px;
+}
+
+/* CARD */
+.block.team > div {
+  background: #f3f3f3;
+  border-radius: 6px;
+  text-align: center;
+  padding: 24px;
+}
+
+/* IMAGE */
+.block.team img {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto 18px;
+  border-radius: 6px;
+}
+
+/* NAME */
+.block.team h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 8px 0 4px;
+}
+
+/* ROLE */
+.block.team p.role {
+  font-size: 13px;
+  color: #e41e1e;
+  margin-bottom: 14px;
+}
+
+/* SOCIAL */
+.block.team .social {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.block.team .social span {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #f39c12;
+  border-radius: 50%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .block.team {
+    grid-template-columns: 1fr;
+  }
+}

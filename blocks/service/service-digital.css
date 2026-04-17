@@ -1,0 +1,115 @@
+.section.service-container {
+  position: relative;
+  padding: 100px 0;
+  overflow: hidden;
+
+  /* Background image */
+  background-image: url('https://themeloto.com/wps/gradi/wp-content/uploads/2024/11/gradi-slider.jpg'); /* ✅ update path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ✅ BLUE GRADIENT OVERLAY */
+.section.service-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(6, 89, 212, 0.92),
+    rgba(6, 89, 212, 0.92)
+  );
+  z-index: 0;
+}
+
+/* Keep all content ABOVE overlay */
+.section.service-container .service-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================================================
+   service LAYOUT
+   ===================================================== */
+
+.service.block {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.service.row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  text-align: center;
+  align-items: center;
+}
+
+/* =====================================================
+   service TILE
+   ===================================================== */
+
+.service-tile {
+  color: #ffffff;
+}
+
+/* Number */
+.service-tile p {
+  margin: 0;
+}
+
+.service-tile p strong {
+  font-size: 64px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Label */
+.service-tile h2 {
+  margin-top: 12px;
+}
+
+.service-tile h2 strong {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* =====================================================
+   RESPONSIVE BREAKPOINTS
+   ===================================================== */
+
+/* Tablet */
+@media (max-width: 991px) {
+  .service.row {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 40px;
+  }
+
+  .service-tile p strong {
+    font-size: 52px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .section.service-container {
+    padding: 80px 0;
+  }
+
+  .service.row {
+    grid-template-columns: 1fr;
+  }
+
+  .service-tile p strong {
+    font-size: 48px;
+  }
+
+  .service-tile h2 strong {
+    font-size: 14px;
+  }
+}

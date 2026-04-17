@@ -7,36 +7,43 @@
 .hero-carousel .hero-slide {
   position: relative;
   overflow: hidden;
+  min-height: 480px;
 }
 
 .hero-carousel .hero-media picture,
 .hero-carousel .hero-media img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
 }
 
-/* Text Overlay */
+/* Text Overlay - left aligned block */
 .hero-carousel .hero-text-wrapper {
   position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  padding: 3.5rem 4rem;
+  left: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: block;
   color: #fff;
+  max-width: 52%;
+  padding: 2.5rem 1rem;
 }
 
 .hero-carousel h2 {
-  font-size: 56px;
-  font-weight: 700;
-  margin-bottom: 18px;
+  font-size: 64px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  line-height: 0.95;
+  font-family: var(--heading-font-family, Georgia, 'Times New Roman', serif);
+  text-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
 
 .hero-carousel p {
   font-size: 18px;
-  margin-bottom: 22px;
+  margin: 0 0 22px 0;
+  max-width: 34rem;
 }
 
 /* Overlay */
@@ -44,38 +51,60 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 1;
+  background: linear-gradient(90deg, rgba(0,0,0,0.6) 15%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0));
+  z-index: 2;
 }
 
-/* CTA buttons */
-.hero-carousel a {
-  padding: 14px 34px;
-  border-radius: 8px;
+/* CTA buttons inside slide */
+.hero-carousel a.button {
+  padding: 12px 28px;
+  border-radius: 6px;
   font-weight: 700;
   text-decoration: none;
 }
 
-/* Swiper controls */
+/* Swiper controls: white circular buttons with blue chevrons */
 .hero-carousel .swiper-button-prev,
 .hero-carousel .swiper-button-next {
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-carousel .swiper-button-prev::after,
+.hero-carousel .swiper-button-next::after {
+  /* color the built-in svg icon to blue and increase size */
+  color: #2b6ef2;
+  font-size: 28px;
+  text-shadow: none;
 }
 
-/* Pagination */
+/* Pagination bullets (white) */
 .hero-carousel .swiper-pagination-bullet {
-  background: #fff;;
+  background: rgba(255,255,255,0.9);
+  opacity: 0.9;
 }
 .hero-carousel .swiper-pagination-bullet-active {
   background: #fff;
+  box-shadow: 0 0 0 4px rgba(217,43,39,0.08);
 }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .hero-carousel h2 {
-    font-size: 40px;
-  }
+  .hero-carousel h2 { font-size: 40px; }
+  .hero-carousel .hero-slide { min-height: 360px; }
+  .hero-carousel .hero-text-wrapper { left: 4%; max-width: 72%; }
+  .hero-carousel .swiper-button-prev,
+  .hero-carousel .swiper-button-next { width: 48px; height: 48px; }
+}
+
+@media (max-width: 560px) {
+  .hero-carousel h2 { font-size: 28px; }
+  .hero-carousel .hero-text-wrapper { position: static; transform: none; padding: 20px; max-width: 100%; }
+  .hero-carousel .swiper-button-prev,
+  .hero-carousel .swiper-button-next { display: none; }
 }

@@ -7,7 +7,8 @@
   left: 0;
   width: 100%;
   height: 44px;
-  z-index: 50;
+  /* ensure top-header sits above other sticky headers */
+  z-index: 1100;
 }
 
 .top-header .top-container {
@@ -81,5 +82,6 @@
 
 /* ensure main page content is not hidden beneath the fixed top bar */
 main, .main, body > .page-content {
-  padding-top: 44px;
+  /* account for fixed top bar (44px) + hero header (82px) to avoid content being hidden */
+  padding-top: 126px;
 }

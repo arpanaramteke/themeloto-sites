@@ -1,0 +1,135 @@
+.about-us-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.about-us-image {
+  position: relative;
+}
+
+.about-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: red;
+  color: #fff;
+  padding: 8px 16px;
+}
+
+.about-us-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.about-eyebrow {
+  color: #b33;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.about-title {
+  font-size: 48px;
+  line-height: 1.02;
+  margin: 6px 0 16px 0;
+  color: #111;
+  font-weight: 800;
+}
+
+.about-description {
+  color: #666;
+  max-width: 520px;
+}
+
+.about-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 12px;
+}
+
+/* Each skill is a single row: label | track | percent */
+.about-skills .skill {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+  position: relative; /* for pseudo-element stacking */
+}
+
+.about-skills .skill > span:first-child {
+  color: #6b6b6b;
+  font-weight: 700;
+}
+
+.about-skills .skill .percent {
+  color: #e6a623; /* gold percent color */
+  font-weight: 800;
+}
+
+/* track (background) in middle column */
+.about-skills .skill .track {
+  display: block; /* fallback if markup changes */
+}
+
+.about-skills .skill::before {
+  content: '';
+  grid-column: 2;
+  height: 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 2px solid #f2e8e8;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+/* filled portion drawn by a gradient that uses the CSS var set by JS (--pct) */
+.about-skills .skill::after {
+  content: '';
+  grid-column: 2;
+  height: 12px;
+  border-radius: 12px;
+  width: 100%;
+  background: linear-gradient(to right, #d92b27 var(--pct, 0%), rgba(217,43,39,0) var(--pct, 0%));
+  margin-left: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.about-signature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.about-signature .name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  color: #0b2b2b;
+}
+.about-signature .role {
+  color: #d92b27;
+  font-weight: 600;
+}
+
+.about-us .button.primary {
+  background: #d92b27;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 12px;
+}
+
+/* small tweaks for mobile */
+@media (max-width: 900px) {
+  .about-us-inner { grid-template-columns: 1fr; }
+  .about-us-image img { width: 100%; height: auto; }
+  .about-title { font-size: 30px; }
+}
+
