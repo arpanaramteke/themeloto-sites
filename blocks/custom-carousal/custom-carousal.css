@@ -1,0 +1,169 @@
+/* ============================================
+   GRADI CAROUSEL – ORIGINAL HOVER BEHAVIOR
+============================================ */
+
+/* ---------- CARD ---------- */
+
+.gradi-card {
+  position: relative;
+  height: 430px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: transparent;
+  transition: transform 0.35s ease;
+}
+
+.gradi-card:hover {
+  transform: translateY(-6px);
+}
+
+/* ---------- IMAGE ---------- */
+
+.gradi-image img,
+.gradi-image picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Gradi crops images intentionally */
+  display: block;
+}
+
+/* ---------- WHITE CONTENT PANEL ---------- */
+/* Hidden by default */
+
+.gradi-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -100px;
+  background: #ffffff;
+  padding: 18px 16px;
+  text-align: center;
+  transition: bottom 0.35s ease;
+  z-index: 5;
+}
+
+/* Show ONLY on hovered card */
+.gradi-card:hover .gradi-overlay {
+  bottom: 0;
+}
+
+.gradi-overlay h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: #111;
+}
+
+.gradi-overlay p {
+  font-size: 13px;
+  color: #888;
+  margin-top: 6px;
+}
+
+/* ---------- RED + BUTTON ---------- */
+/* COMPLETELY HIDDEN BY DEFAULT */
+
+/* ===============================
+   RED + BUTTON — PERFECT ALIGNMENT
+================================ */
+
+.gradi-plus {
+  position: absolute;
+  bottom: 72px;              /* ⬅ fine‑tuned like original */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  background: #e11d2a;
+  color: #ffffff;
+  font-size: 22px;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;               /* hidden by default */
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 10;
+}
+
+/* Show ONLY on hover of that card */
+.gradi-card:hover .gradi-plus {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ---------- SWIPER ARROWS ---------- */
+
+.gradi-carousel .swiper-button-prev,
+.gradi-carousel .swiper-button-next {
+  width: 46px;
+  height: 46px;
+  background: #f4b01b;
+  border-radius: 50%;
+}
+
+.gradi-carousel .swiper-button-prev::after,
+.gradi-carousel .swiper-button-next::after {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.gradi-carousel .swiper-button-prev:hover,
+.gradi-carousel .swiper-button-next:hover {
+  background: #e11d2a;
+}
+/* ===============================
+   CENTER HEADINGS ABOVE CAROUSEL
+================================ */
+
+/* =====================================
+   GRADI HERO HEADING (EXACT MATCH)
+===================================== */
+
+.custom-carousal-container .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Small red subtitle */
+.custom-carousal-container .default-content-wrapper h4 {
+  color: #e11d2a; /* Gradi red */
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+/* Main heading */
+.custom-carousal-container .default-content-wrapper h2 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Make only the word "Marketing" red */
+.custom-carousal-container #digital-marketing-gallery {
+  color: #111;
+}
+
+/* Target the word Marketing */
+.custom-carousal-container #digital-marketing-gallery {
+  --red: #e11d2a;
+}
+
+/* Replace word visually using CSS */
+.custom-carousal-container #digital-marketing-gallery {
+  font-weight: 700;
+}
+
+/* Optional: if you wrap 'Marketing' in <span> later */
+.custom-carousal-container #digital-marketing-gallery span {
+  color: #e11d2a;
+}

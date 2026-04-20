@@ -1,27 +1,149 @@
-.cards > ul {
+/* =====================================================
+   SERVICES / CARDS BLOCK – FULL STYLING (ONE FILE)
+   Works with da.live default cards block
+===================================================== */
+
+/* ---------- SECTION TEXT ---------- */
+.cards-container .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cards-container .default-content-wrapper p {
+  color: #e11d2a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.cards-container .default-content-wrapper h1,
+.cards-container .default-content-wrapper h2 {
+  color: #111;
+  font-size: 38px;
+  margin-top: 10px;
+}
+
+/* ---------- GRID LAYOUT (IMPORTANT FIX) ---------- */
+.cards.block ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
 }
 
-.cards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+/* Responsive */
+@media (max-width: 900px) {
+  .cards.block ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.cards .cards-card-body {
-  margin: 16px;
+@media (max-width: 600px) {
+  .cards.block ul {
+    grid-template-columns: 1fr;
+  }
 }
 
-.cards .cards-card-image {
-  line-height: 0;
+/* ---------- CARD BASE ---------- */
+.cards.block ul li {
+  position: relative;
+  background: #ffffff;
+  padding: 28px 28px 31px;
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.45s ease;
+  overflow: hidden;
 }
 
-.cards > ul > li img {
+/* ---------- ICON ---------- */
+.cards-card-image {
+  max-width: 60px;
+  margin: 0 auto 20px;
+}
+
+.cards-card-image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  filter: brightness(0) saturate(100%)
+    invert(21%) sepia(87%)
+    saturate(6400%)
+    hue-rotate(355deg);
+  transition: all 0.4s ease;
+}
+
+/* ---------- TEXT ---------- */
+.cards-card-body h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  transition: color 0.4s ease;
+}
+
+.cards-card-body p {
+  font-size: 14px;
+  color: #777;
+  line-height: 1.6;
+  transition: color 0.4s ease;
+}
+
+/* ---------- RED ARROW BUTTON ---------- */
+/* Requires Font Awesome loaded in head.html */
+
+.cards.block ul li {
+  position: relative;
+}
+.cards.block ul li a {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  text-indent: -9999px;
+}
+
+/* Arrow button */
+.cards.block ul li::after {
+  content: "\f105";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46px;
+  height: 46px;
+  background: #e11d2a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  z-index: 3;
+}
+
+
+/* ---------- HOVER ANIMATION ---------- */
+.cards.block ul li:hover {
+  background: #f4b01b;
+  transform: translateY(-10px) rotate(-2deg);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+.cards.block ul li:hover h2,
+.cards.block ul li:hover p {
+  color: #ffffff;
+}
+
+.cards.block ul li:hover .cards-card-image img {
+  filter: brightness(0) invert(1);
+  transform: scale(1.12);
+}
+
+.cards.block ul li:hover::after {
+  transform: translateX(-50%) scale(1);
+}
+
+/* ---------- ACCESSIBILITY (optional but recommended) ---------- */
+.cards.block ul li:focus-within {
+  outline: 2px solid #f4b01b;
 }
