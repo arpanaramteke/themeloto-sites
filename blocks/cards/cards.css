@@ -102,24 +102,6 @@
 }
 
 /* Arrow button */
-.cards.block ul li::after {
-  content: "\f105";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  position: absolute;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 46px;
-  height: 46px;
-  background: #e11d2a;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  z-index: 3;
-}
 
 
 /* ---------- HOVER ANIMATION ---------- */
@@ -147,3 +129,37 @@
 .cards.block ul li:focus-within {
   outline: 2px solid #f4b01b;
 }
+
+/* Center arrow */
+.cards-card-body p:last-child {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* Arrow container (red box) */
+.cards-card-body p:last-child picture {
+  width: 56px;
+  height: 56px;
+  background-color: #d43737;     /* RED like original */
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Arrow image */
+.cards-card-body p:last-child img {
+  width: 18px;
+  height: auto;
+  filter: brightness(0) invert(1); /* makes arrow white */
+}
+
+/* Optional hover effect (like premium UI) */
+.cards-card-body p:last-child picture:hover {
+  background-color: #b92f2f;
+  transform: translateX(4px);
+}
+

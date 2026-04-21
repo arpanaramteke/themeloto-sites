@@ -131,21 +131,24 @@
 }
 
 /* Icon styling (exact size like original) */
+
 .team.block > div > div:last-child picture img {
   width: 36px;
   height: 36px;
   padding: 6px;
-  border: 1px solid #f5a623;
   border-radius: 50%;
+  border: 1px solid #f5a623;
   background: #fff;
-  transition: all 0.25s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* Hover effect */
+/* ✅ Correct hover behavior */
 .team.block > div > div:last-child picture img:hover {
-  background: #f5a623;
-  filter: brightness(0) invert(1);
+  background: #f5a623;     /* orange background */
+  border-color: #f5a623;
+  filter: none;            /* 🔥 REMOVE inverter */
 }
+
 /* ==================================================
    RESPONSIVE
 ================================================== */
