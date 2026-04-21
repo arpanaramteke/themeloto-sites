@@ -1,86 +1,163 @@
-/* ...existing code... */
-.block.team {
+/* ==================================================
+   SECTION & GRID
+================================================== */
+
+.section.team-container {
+  padding: 90px 20px;
+}
+
+.team.block {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin: 60px auto;
+  gap: 60px;
   max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* CARD */
-.block.team > div {
-  background: transparent; /* removed gray background */
-  border-radius: 6px;
-  text-align: center;
-  padding: 0 24px 24px; /* remove top padding so image reaches the top of the card */
+/* ==================================================
+   IMAGE CARD (MATCH ORIGINAL)
+================================================== */
+
+.team.block > div > div:first-child {
+  background: #f2f2f2;
+  border-radius: 12px;
+  padding: 30px;
 }
 
-/* IMAGE WRAPPER */
-.block.team > div > div:first-child {
-  overflow: hidden;
-  border-radius: 6px;
-}
-
-/* IMAGE */
-.block.team img {
+.team.block > div > div:first-child img {
   width: 100%;
-  height: 430px; /* large image as in screenshot */
-  object-fit: cover; /* crop to fill the card while keeping center visible */
+  max-width: 280px;
+  height: auto;
+  border-radius: 8px;
   display: block;
-  margin: 0 0 18px;
-  border-radius: 6px 6px 0 0;
-  max-width: none;
+  margin: 0 auto;
 }
 
-/* NAME */
-.block.team h3 {
+/* ===============================================
+   NAME + ROLE (FIX RED COLOR PROPERLY)
+================================================ */
+
+/* Make whole text red (role) */
+.team.block > div > div:last-child > p:first-child {
+  color: #ff4d4d;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.4;
+}
+
+/* Make ONLY the name black & bold */
+.team.block > div > div:last-child > p:first-child::first-line {
+  color: #111;
   font-size: 18px;
-  font-weight: 600;
-  margin: 8px 0 4px;
+  font-weight: 700;
 }
 
-/* ROLE */
-.block.team {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin: 60px auto;
-  max-width: 1200px;
-}
+/* ===============================
+   TEAM SECTION HEADING — FIXED
+================================ */
 
-/* CARD */
-.block.team > div {
-  background: transparent; /* remove gray background so cards blend with page */
-  border-radius: 6px;
+/* Center heading */
+.team-container .default-content-wrapper {
   text-align: center;
-  padding: 0 24px 24px; /* keep some side and bottom padding; remove top so image reaches card top */
 }
 
-/* IMAGE WRAPPER */
-.block.team > div > div:first-child {
-  overflow: hidden;
-  border-radius: 6px;
+/* Small heading */
+#our-best-team-members {
+  color: #ff4d4d;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-/* IMAGE */
-.block.team img {
-  width: 100%;
-  height: 430px; /* large image similar to the screenshot on desktop */
-  object-fit: cover; /* crop to fill while keeping center visible */
-  object-position: center;
-  display: block;
-  margin: 0 0 18px;
-  border-radius: 6px 6px 0 0;
-  max-width: none;
+/* Main heading */
+#meet-our-professionals-team {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111;
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .block.team {
+/* ✅ Red word */
+#meet-our-professionals-team .highlight {
+  color: #ff4d4d;
+}
+
+/* ===============================================
+   SOCIAL ICON ALIGNMENT (PIXEL PERFECT)
+================================================ */
+
+/* =======================================================
+   FIX SOCIAL ICON ALIGNMENT — MATCH ORIGINAL SITE
+======================================================= */
+
+/* Bottom content wrapper (name + role + icons) */
+.team.block > div > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+/* Name + role takes full width */
+.team.block > div > div:last-child > p:first-child {
+  flex: 0 0 100%;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #ff4d4d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Name (first line) */
+.team.block > div > div:last-child > p:first-child::first-line {
+  color: #111;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ALL icon paragraphs behave like inline items */
+.team.block > div > div:last-child > p:not(:first-child) {
+  display: inline-flex;
+  margin: 0;
+}
+
+/* Icon pictures inline */
+.team.block > div > div:last-child picture {
+  display: inline-flex;
+}
+
+/* Icon styling (exact size like original) */
+.team.block > div > div:last-child picture img {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: 1px solid #f5a623;
+  border-radius: 50%;
+  background: #fff;
+  transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.team.block > div > div:last-child picture img:hover {
+  background: #f5a623;
+  filter: brightness(0) invert(1);
+}
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 1024px) {
+  .team.block {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .team.block {
     grid-template-columns: 1fr;
   }
-  .block.team img {
-    height: 320px; /* smaller height on mobile */
-  }
 }
-/* ...existing code... */

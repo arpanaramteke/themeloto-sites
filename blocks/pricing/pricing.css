@@ -1,0 +1,130 @@
+/* =========================
+   HEADINGS
+========================= */
+
+.pricing-container .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+#popular-plan {
+  color: #e11d2a;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+#our-pricing-packaging {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+#our-pricing-packaging span {
+  color: #e11d2a;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.pricing-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 45px 32px;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* .pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.15);
+} */
+
+/* Featured (middle card) */
+.pricing-card.featured {
+  transform: scale(1.05);
+  box-shadow: 0 25px 65px rgba(0,0,0,0.18);
+}
+
+/* =========================
+   PRICE & PLAN
+========================= */
+
+.price {
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.plan {
+  display: inline-block;
+  padding: 8px 26px;
+  background: #e11d2a;
+  color: #fff;
+  border-radius: 25px;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 35px;
+}
+
+.pricing-card li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.pricing-card li::before {
+  content: '➜';
+  position: absolute;
+  left: 0;
+  color: #e11d2a;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.pricing-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  color: #111 !important;
+  text-decoration: none;
+  font-size: 14px;
+  transition:  0.3s ease, color 0.3s ease;
+}
+
+.pricing-btn:hover {
+  background: #e11d2a;
+  color: #fff;
+}
+
+.pricing-card.featured .pricing-btn {
+  background: #e11d2a;
+  color: #fff;
+  border: none;
+}
